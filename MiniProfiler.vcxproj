@@ -20,16 +20,15 @@
   </ItemGroup>
 
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>17.0</VCProjectVersion>
-    <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{8478EBAC-8558-4BCC-AF17-F2489257D617}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
     <RootNamespace>MiniProfiler</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 
-  <!-- Match toolset & DLL across configs (like the reference) -->
+  <!-- v142 toolset, DLL, Unicode (all configs) -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -59,9 +58,6 @@
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Label="Shared" />
-
-  <!-- User props -->
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -77,37 +73,37 @@
 
   <PropertyGroup Label="UserMacros" />
 
-  <!-- Match the reference: OutDir/IntDir & IncludePath prepend, TargetName pattern -->
+  <!-- Output/Intermediate dirs & IncludePath prepend -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\Include\um;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8.1\Include\um;$(IncludePath)</IncludePath>
     <TargetName>MiniProfiler_$(PlatformTarget)</TargetName>
     <OutDir>$(ProjectDir)$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)$(PlatformTarget)\intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\Include\um;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8.1\Include\um;$(IncludePath)</IncludePath>
     <TargetName>MiniProfiler_$(PlatformTarget)</TargetName>
     <OutDir>$(ProjectDir)$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)$(PlatformTarget)\intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\Include\um;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8.1\Include\um;$(IncludePath)</IncludePath>
     <TargetName>MiniProfiler_$(PlatformTarget)</TargetName>
     <OutDir>$(ProjectDir)$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)$(PlatformTarget)\intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\Include\um;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8.1\Include\um;$(IncludePath)</IncludePath>
     <TargetName>MiniProfiler_$(PlatformTarget)</TargetName>
     <OutDir>$(ProjectDir)$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)$(PlatformTarget)\intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
 
-  <!-- Item Definitions: make our build flags match the reference -->
+  <!-- Item Definitions: language std, macros, runtime libs, linker settings -->
   <!-- Debug | Win32 -->
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,8 +114,15 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>
-        WIN32;_DEBUG;_WINDOWS;_USRDLL;ILREWRITEPROFILER_EXPORTS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)
+        WIN32;_DEBUG;_WINDOWS;_USRDLL;
+        ILREWRITEPROFILER_EXPORTS;
+        _CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;
+        SPDLOG_WCHAR_TO_UTF8_SUPPORT;SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_DEBUG;
+        RAPIDJSON_HAS_STDSTRING;
+        USECLASSICCLRPROFILERLIBRARY;CLASSICCLRPROFILERLIBRARY_EXPORTS;
+        %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,9 +144,16 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>
-        WIN32;_DEBUG;_WINDOWS;_USRDLL;ILREWRITEPROFILER_EXPORTS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)
+        WIN32;_DEBUG;_WINDOWS;_USRDLL;
+        ILREWRITEPROFILER_EXPORTS;
+        _CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;
+        SPDLOG_WCHAR_TO_UTF8_SUPPORT;SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_DEBUG;
+        RAPIDJSON_HAS_STDSTRING;
+        USECLASSICCLRPROFILERLIBRARY;CLASSICCLRPROFILERLIBRARY_EXPORTS;
+        %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS</AdditionalOptions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,8 +179,15 @@
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>
-        WIN32;NDEBUG;_WINDOWS;_USRDLL;ILREWRITEPROFILER_EXPORTS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)
+        WIN32;NDEBUG;_WINDOWS;_USRDLL;
+        ILREWRITEPROFILER_EXPORTS;
+        _CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;
+        SPDLOG_WCHAR_TO_UTF8_SUPPORT;SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_DEBUG;
+        RAPIDJSON_HAS_STDSTRING;
+        USECLASSICCLRPROFILERLIBRARY;CLASSICCLRPROFILERLIBRARY_EXPORTS;
+        %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -198,8 +215,15 @@
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>
-        WIN32;NDEBUG;_WINDOWS;_USRDLL;ILREWRITEPROFILER_EXPORTS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)
+        WIN32;NDEBUG;_WINDOWS;_USRDLL;
+        ILREWRITEPROFILER_EXPORTS;
+        _CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;
+        SPDLOG_WCHAR_TO_UTF8_SUPPORT;SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_DEBUG;
+        RAPIDJSON_HAS_STDSTRING;
+        USECLASSICCLRPROFILERLIBRARY;CLASSICCLRPROFILERLIBRARY_EXPORTS;
+        %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -213,7 +237,7 @@
     </Link>
   </ItemDefinitionGroup>
 
-  <!-- Keep your existing items -->
+  <!-- Your items (unchanged) -->
   <ItemGroup>
     <ClInclude Include="Logger.h" />
     <ClInclude Include="ProfilerClassFactory.hpp" />
@@ -221,11 +245,6 @@
     <ClInclude Include="ProfilerCallback.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build_all.bat">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
-      <FileType>Document</FileType>
-    </None>
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="ProfilerCallback.cpp" />
     <ClCompile Include="dllmain.cpp" />
