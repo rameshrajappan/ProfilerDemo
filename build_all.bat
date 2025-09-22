@@ -27,15 +27,23 @@ echo.
 echo All builds completed.
 echo.
 echo Output files:
-echo - x86\Release\MiniProfiler.dll
-echo - x64\Release\MiniProfiler.dll
+echo - x86\Release\MiniProfiler_x86.dll
+echo - x64\Release\MiniProfiler_x64.dll
+echo.
+echo Setting permissions on output files...
+echo.
+icacls "x86\Release\MiniProfiler_x86.dll" /grant "Everyone:(RX)" /T
+icacls "x64\Release\MiniProfiler_x64.dll" /grant "Everyone:(RX)" /T
 echo.
 echo Copying the files
-copy "x86\Release\MiniProfiler.dll" ".\MiniProfiler_x86.dll"
-copy "x64\Release\MiniProfiler.dll" ".\MiniProfiler_x64.dll"
+echo.
+copy  /Y "x86\Release\MiniProfiler_x86.dll" ".\MiniProfiler_x86.dll"
+copy  /Y "x64\Release\MiniProfiler_x64.dll" ".\MiniProfiler_x64.dll"
+echo.
 echo Setting permissions on output files...
-icacls "x86\Release\MiniProfiler.dll" /grant "Everyone:(RX)" /T
-icacls "x64\Release\MiniProfiler.dll" /grant "Everyone:(RX)" /T
+echo.
+icacls ".\MiniProfiler_x86.dll" /grant "Everyone:(RX)" /T
+icacls ".\MiniProfiler_x64.dll" /grant "Everyone:(RX)" /T
 echo.
 echo Remember to copy the appropriate DLL to your test environment.
 

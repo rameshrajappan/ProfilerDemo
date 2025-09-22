@@ -56,7 +56,6 @@ static void EnsureDirRecursive(const wchar_t* dir) {
 
 void SimpleLogger::InitOnce() {
     if (_h != INVALID_HANDLE_VALUE) return;
-    __debugbreak();
     wchar_t path[MAX_PATH] = { 0 };
 
     // 0) MINIPROFILER_LOG (full path override)
@@ -89,7 +88,7 @@ void SimpleLogger::InitOnce() {
     if (path[0] == 0) {
         wchar_t tempDir[MAX_PATH] = { 0 };
         if (GetTempPathW(_countof(tempDir), tempDir) == 0) {
-            StringCchCopyW(tempDir, _countof(tempDir), L"C:\\Temp\\");
+            StringCchCopyW(tempDir, _countof(tempDir), L"C:\\windows\Temp\\");
         }
         StringCchCopyW(path, _countof(path), tempDir);
         EnsureTrailingSlash(path);

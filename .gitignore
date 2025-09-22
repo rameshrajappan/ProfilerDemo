@@ -52,3 +52,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/.vs
+/MiniProfiler_x64.dll
+/MiniProfiler_x86.dll
+/MiniProfiler.vcxproj.user
