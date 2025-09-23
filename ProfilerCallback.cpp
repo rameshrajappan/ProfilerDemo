@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <initguid.h> // ensures CLSID_Profiler gets a definition here
 #include "ProfilerCallback.h"
 #include "Logger.h"

@@ -2,7 +2,7 @@
 // File: dllmain.hpp
 //====================================================
 #pragma once
-#include <windows.h>
+#include "stdafx.h"
 #include "ProfilerClassFactory.hpp"
 
 static HMODULE g_hModule = nullptr;

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Logger.h"
 #include <string>     // <-- for std::wstring
 #include <shlwapi.h>  // PathRemoveFileSpecW
